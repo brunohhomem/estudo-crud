@@ -1,6 +1,6 @@
 package com.bhh.estudoCrud.controller;
 
-import com.bhh.estudoCrud.entity.Pessoa;
+import com.bhh.estudoCrud.dto.PessoaRetornoDTO;
 import com.bhh.estudoCrud.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,11 @@ import java.util.List;
 @RequestMapping("/api/v1/pessoas")
 public class PessoaController {
 
-    @Autowired private PessoaService pessoaService;
+    @Autowired
+    private PessoaService pessoaService;
 
     @GetMapping
-    public ResponseEntity<List<Pessoa>> listarPessoas(){
+    public ResponseEntity<List<PessoaRetornoDTO>> listarPessoas() {
         var pessoas = pessoaService.listarPessoas();
         return ResponseEntity.ok(pessoas);
     }
