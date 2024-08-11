@@ -1,8 +1,8 @@
 package com.bhh.estudoCrud.service;
 
+import com.bhh.estudoCrud.dto.PessoaRetornoDTO;
 import com.bhh.estudoCrud.entity.Pessoa;
 import com.bhh.estudoCrud.repository.PessoaRepository;
-import com.bhh.estudoCrud.dto.PessoaRetornoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,15 @@ public class PessoaService {
     public List<PessoaRetornoDTO> listarPessoas() {
         List<Pessoa> pessoas = pessoaRepository.findAll();
 
-        return pessoas.stream().map(pessoa -> new PessoaRetornoDTO(pessoa.getNome(), pessoa.getSobrenome())).toList();
+        //Transforma a lista de pessoas em DTO
+        return pessoas.stream()
+                .map(pessoa -> new PessoaRetornoDTO(pessoa.getNome(), pessoa.getSobrenome())).toList();
+    }
+
+    public PessoaRetornoDTO buscarPessoa(Long id) {
+        var pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
+
+        //Transforma a pessoa em DTO
+        return new PessoaRetornoDTO(pessoa.getNome(), pessoa.getEmail());
     }
 }
