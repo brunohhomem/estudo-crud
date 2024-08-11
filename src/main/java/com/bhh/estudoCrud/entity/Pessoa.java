@@ -1,5 +1,6 @@
 package com.bhh.estudoCrud.entity;
 
+import com.bhh.estudoCrud.dto.InsertPessoaDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,4 +22,11 @@ public class Pessoa {
     private String nome;
     private String sobrenome;
     private String email;
+
+    //Construtor de inserir pessoa
+    public Pessoa(InsertPessoaDTO insertPessoaDTO) {
+        this.nome = insertPessoaDTO.nome();
+        this.sobrenome = insertPessoaDTO.sobrenome();
+        this.email = insertPessoaDTO.email();
+    }
 }

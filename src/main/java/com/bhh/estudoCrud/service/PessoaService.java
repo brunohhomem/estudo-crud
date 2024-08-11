@@ -1,5 +1,6 @@
 package com.bhh.estudoCrud.service;
 
+import com.bhh.estudoCrud.dto.InsertPessoaDTO;
 import com.bhh.estudoCrud.dto.PessoaRetornoDTO;
 import com.bhh.estudoCrud.entity.Pessoa;
 import com.bhh.estudoCrud.repository.PessoaRepository;
@@ -27,5 +28,11 @@ public class PessoaService {
 
         //Transforma a pessoa em DTO
         return new PessoaRetornoDTO(pessoa.getNome(), pessoa.getEmail());
+    }
+
+    public InsertPessoaDTO inserirPessoa(InsertPessoaDTO insertPessoaDTO) {
+        Pessoa novaPessoa = new Pessoa(insertPessoaDTO);
+        pessoaRepository.save(novaPessoa);
+        return insertPessoaDTO;
     }
 }
