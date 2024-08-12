@@ -4,6 +4,7 @@ import com.bhh.estudoCrud.dto.InsertPessoaDTO;
 import com.bhh.estudoCrud.dto.PessoaRetornoDTO;
 import com.bhh.estudoCrud.dto.UpdatePessoaDTO;
 import com.bhh.estudoCrud.entity.Pessoa;
+import com.bhh.estudoCrud.exception.PessoaException;
 import com.bhh.estudoCrud.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class PessoaService {
 
     public PessoaRetornoDTO buscarPessoa(Long id) {
         var pessoa = pessoaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
+                .orElseThrow(() -> new PessoaException("Pessoa não encontrada"));
 
         //Transforma a pessoa em DTO
         return new PessoaRetornoDTO(pessoa.getNome(), pessoa.getEmail());
@@ -40,9 +41,9 @@ public class PessoaService {
 
     public UpdatePessoaDTO atualizaPessoa(Long id, UpdatePessoaDTO updatePessoaDTO) {
         Pessoa selecionaPessoa = pessoaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
+                .orElseThrow(() -> new PessoaException("Pessoa não encontrada"));
 
-        if(updatePessoaDTO.email().isBlank() || updatePessoaDTO.email().isEmpty()){
+        if (updatePessoaDTO.email().isBlank() || updatePessoaDTO.email().isEmpty()) {
             return null;
         }
 
