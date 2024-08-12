@@ -2,6 +2,7 @@ package com.bhh.estudoCrud.controller;
 
 import com.bhh.estudoCrud.dto.InsertPessoaDTO;
 import com.bhh.estudoCrud.dto.PessoaRetornoDTO;
+import com.bhh.estudoCrud.dto.UpdatePessoaDTO;
 import com.bhh.estudoCrud.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,14 @@ public class PessoaController {
     }
 
     @PostMapping("/inserirPessoa")
-    public ResponseEntity<InsertPessoaDTO> inserirPessoa(@RequestBody InsertPessoaDTO insertPessoaDTO){
+    public ResponseEntity<InsertPessoaDTO> inserirPessoa(@RequestBody InsertPessoaDTO insertPessoaDTO) {
         var novaPessoa = pessoaService.inserirPessoa(insertPessoaDTO);
         return ResponseEntity.ok(novaPessoa);
+    }
+
+    @PutMapping("/atualizaPessoa/{id}")
+    public ResponseEntity<UpdatePessoaDTO> atualizaPessoa(@PathVariable Long id, @RequestBody UpdatePessoaDTO updatePessoaDTO){
+        var pessoaSelecionada = pessoaService.atualizaPessoa(id, updatePessoaDTO);
+        return ResponseEntity.ok(pessoaSelecionada);
     }
 }

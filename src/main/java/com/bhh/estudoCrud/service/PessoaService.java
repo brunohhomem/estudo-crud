@@ -2,6 +2,7 @@ package com.bhh.estudoCrud.service;
 
 import com.bhh.estudoCrud.dto.InsertPessoaDTO;
 import com.bhh.estudoCrud.dto.PessoaRetornoDTO;
+import com.bhh.estudoCrud.dto.UpdatePessoaDTO;
 import com.bhh.estudoCrud.entity.Pessoa;
 import com.bhh.estudoCrud.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class PessoaService {
     }
 
     public PessoaRetornoDTO buscarPessoa(Long id) {
-        var pessoa = pessoaRepository.findById(id).orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
+        var pessoa = pessoaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
 
         //Transforma a pessoa em DTO
         return new PessoaRetornoDTO(pessoa.getNome(), pessoa.getEmail());
@@ -34,5 +36,18 @@ public class PessoaService {
         Pessoa novaPessoa = new Pessoa(insertPessoaDTO);
         pessoaRepository.save(novaPessoa);
         return insertPessoaDTO;
+    }
+
+    public UpdatePessoaDTO atualizaPessoa(Long id, UpdatePessoaDTO updatePessoaDTO) {
+        Pessoa selecionaPessoa = pessoaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
+
+        if(updatePessoaDTO.email().isBlank() || updatePessoaDTO.email().isEmpty()){
+            return null;
+        }
+
+        selecionaPessoa.setEmail(updatePessoaDTO.email());
+        selecionaPessoa = pessoaRepository.save(selecionaPessoa);
+        return updatePessoaDTO;
     }
 }
