@@ -5,3 +5,4 @@ public class PessoaException extends RuntimeException {
         super(message);
     }
 }
+
